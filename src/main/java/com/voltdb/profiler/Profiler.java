@@ -34,7 +34,7 @@ public class Profiler extends BaseVoltApp {
 
     @Override
     protected void execute() throws Exception {
-        Renderer renderer = RendererFactory.get(RendererFactory.TYPE_SYSTEM);
+        Renderer renderer = RendererFactory.get(RendererFactory.RendererType.SYSTEM);
         showSystemInformationOverview(renderer);
         showSystemInformationDeployment(renderer);
         showProcedureStatistics(renderer);
