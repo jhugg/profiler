@@ -1,4 +1,5 @@
-package com.voltdb.profiler;
+package com.voltdb.profiler.renderer;
+
 
 public class PrintRenderer extends Renderer {
 

@@ -1,16 +1,18 @@
-package com.voltdb.profiler;
+package com.voltdb.profiler.info.procedure;
 
-import java.util.GregorianCalendar;
 import java.util.HashMap;
 
 import org.voltdb.VoltTable;
 import org.voltdb.client.Client;
 import org.voltdb.client.ClientResponse;
 
+import com.voltdb.profiler.renderer.Renderer;
+import com.voltdb.profiler.table.Column;
+import com.voltdb.profiler.table.Table;
+
 public class ProcedureStatsTable implements Table {
     private static final int NANOSECONDS = 1000 * 1000;
 
-    private Column time;
     private  Column procedure;
     private  Column calls;
     private  Column min;
@@ -29,8 +31,7 @@ public class ProcedureStatsTable implements Table {
         this.client = client;
         this.renderer = renderer;
         
-        time = new Column(18, "Time",this.renderer);
-        procedure = new Column(40, "Procedure",this.renderer);
+        procedure = new Column(40, "Procedure",this.renderer, true);
         calls = new Column(15, "Calls",this.renderer);
         min = new Column(15, "Min(ms)",this.renderer);
         max = new Column(15, "Max(ms)",this.renderer);
@@ -50,7 +51,6 @@ public class ProcedureStatsTable implements Table {
     public void drawHeader() {
         renderer.printf("Procedure Statistics%n");
         
-        this.time.writeHeader();
         this.procedure.writeHeader();
         this.calls.writeHeader();
         this.min.writeHeader();
@@ -60,7 +60,6 @@ public class ProcedureStatsTable implements Table {
         this.percent.writeHeader();
         renderer.println();
 
-        this.time.writeUnderline();
         this.procedure.writeUnderline();
         this.calls.writeUnderline();
         this.min.writeUnderline();
@@ -119,7 +118,6 @@ public class ProcedureStatsTable implements Table {
 
     public void printStatistics() {
         for (ProcedureStatistics stats : this.map.values()) {
-            this.time.writeColumn(new GregorianCalendar());
             this.procedure.writeColumn(stats.getProcedure());
             this.calls.writeColumn(stats.getInvocations());
             this.min.writeColumn(stats.getMinExecutionTime(),

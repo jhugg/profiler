@@ -2,6 +2,9 @@ package com.voltdb.profiler;
 
 import com.voltdb.profiler.configuration.SampleConfiguration;
 import com.voltdb.profiler.configuration.SampleConfigurationFactory;
+import com.voltdb.profiler.info.procedure.ProcedureStatsTable;
+import com.voltdb.profiler.renderer.Renderer;
+import com.voltdb.profiler.renderer.RendererFactory;
 
 /**
  * Profiler
@@ -29,6 +32,10 @@ public class Profiler extends BaseVoltApp {
     @Override
     protected void execute() throws Exception {
         Renderer renderer = RendererFactory.get(RendererFactory.TYPE_SYSTEM);
+        showProcedureStatistics(renderer);
+    }
+
+    protected void showProcedureStatistics(Renderer renderer) {
         ProcedureStatsTable procStatsTable = new ProcedureStatsTable(
                 this.client, renderer);
         procStatsTable.show();
