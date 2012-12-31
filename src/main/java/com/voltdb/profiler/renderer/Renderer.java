@@ -1,4 +1,4 @@
-package com.voltdb.profiler;
+package com.voltdb.profiler.renderer;
 
 public abstract class Renderer {
 

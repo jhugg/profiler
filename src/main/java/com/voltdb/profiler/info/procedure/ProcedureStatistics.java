@@ -1,6 +1,5 @@
-package com.voltdb.profiler;
+package com.voltdb.profiler.info.procedure;
 
-import java.util.Calendar;
 
 public class ProcedureStatistics  {
 

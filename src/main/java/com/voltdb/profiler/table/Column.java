@@ -7,25 +7,25 @@ import com.voltdb.profiler.renderer.Renderer;
 
 public class Column {
 
-    int width;
-    String text;
-    String formatString;
-    Renderer renderer;
-    boolean truncate = false;
+    private int width;
+    private String text;
+    private String formatString;
+    private Renderer renderer;
+    private boolean truncate = false;
     
     private final static String TRUNCATE_PREFIX = "...";
 
     public Column(int width, String string, Renderer renderer) {
         this.width = width;
-        text = string;
-        formatString = "%" + width + "s";
+        this.text = string;
+        this.formatString = "%" + this.width + "s";
         this.renderer = renderer;
     }
     
     public Column(int width, String string, Renderer renderer, boolean truncate) {
         this.width = width;
-        text = string;
-        formatString = "%" + width + "s";
+        this.text = string;
+        this.formatString = "%" + width + "s";
         this.renderer = renderer;
         this.truncate = true;
     }

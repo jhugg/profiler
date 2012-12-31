@@ -10,7 +10,7 @@ import com.voltdb.profiler.renderer.Renderer;
 import com.voltdb.profiler.table.Column;
 import com.voltdb.profiler.table.Table;
 
-public class ProcedureStatsTable implements Table {
+public class ProcedureStatsTable extends Table {
     private static final int NANOSECONDS = 1000 * 1000;
 
     private  Column procedure;
@@ -40,12 +40,6 @@ public class ProcedureStatsTable implements Table {
         percent = new Column(15, "Percent",this.renderer);
         
         this.totalExecutionTime = 0f;
-    }
-
-    public void show() {
-        this.collectStatistics();
-        this.drawHeader();
-        this.printStatistics();
     }
 
     public void drawHeader() {
