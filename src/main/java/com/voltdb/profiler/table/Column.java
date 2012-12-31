@@ -8,26 +8,33 @@ import com.voltdb.profiler.renderer.Renderer;
 public class Column {
 
     private int width;
-    private String text;
+    private String label;
+    private String dataMapping;
     private String formatString;
     private Renderer renderer;
     private boolean truncate = false;
     
     private final static String TRUNCATE_PREFIX = "...";
 
-    public Column(int width, String string, Renderer renderer) {
-        this.width = width;
-        this.text = string;
-        this.formatString = "%" + this.width + "s";
-        this.renderer = renderer;
+    public Column(int width, String label, String dataMapping, Renderer renderer) {
+        this(width, label, dataMapping,renderer, false);
     }
     
-    public Column(int width, String string, Renderer renderer, boolean truncate) {
+    public Column(int width, String label, String dataMapping, Renderer renderer, boolean truncate) {
         this.width = width;
-        this.text = string;
+        this.label = label;
+        this.setDataMapping(dataMapping);
         this.formatString = "%" + width + "s";
         this.renderer = renderer;
         this.truncate = true;
+    }
+
+    public String getDataMapping() {
+        return dataMapping;
+    }
+
+    public void setDataMapping(String dataMapping) {
+        this.dataMapping = dataMapping;
     }
 
     public void writeColumn(long value) {
@@ -54,7 +61,7 @@ public class Column {
     }
 
     public void writeHeader() {
-        renderer.printf(this.formatString, text);
+        renderer.printf(this.formatString, label);
     }
 
     public void writeUnderline() {

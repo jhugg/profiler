@@ -1,11 +1,9 @@
 package com.voltdb.profiler.info.catalog;
 
-import java.util.HashMap;
 import java.util.TreeSet;
 
 import org.voltdb.VoltTable;
 import org.voltdb.client.Client;
-import org.voltdb.client.ClientResponse;
 
 import com.voltdb.profiler.renderer.Renderer;
 import com.voltdb.profiler.table.Column;
@@ -13,55 +11,20 @@ import com.voltdb.profiler.table.Table;
 
 public class SystemCatalogProcedureStatsTable extends Table {
 
-    private  Column procedure;
-    private  Column remarks;
+    private Column procedure;
+    private Column remarks;
 
-    Client client;
     private TreeSet<SystemCatalogProcedureStatistics> set = new TreeSet<SystemCatalogProcedureStatistics>();
-    private Renderer renderer;
 
     public SystemCatalogProcedureStatsTable(Client client, Renderer renderer) {
-        this.client = client;
-        this.renderer = renderer;
-        
-        procedure = new Column(40, "Procedure",this.renderer, true);
-        remarks = new Column(80, "Info",this.renderer);
-    }
+        super(client, renderer, "Procedure Statistics", "@SystemCatalog",
+                "procedures");
 
-    public void drawHeader() {
-        renderer.printf("Procedure Statistics%n");
-        
-        this.procedure.writeHeader();
-        this.remarks.writeHeader();
-        renderer.println();
+        this.procedure = new Column(40, "Procedure", "PROCEDURE_NAME",
+                this.renderer, true);
+        this.remarks = new Column(80, "Info", "REMARKS", this.renderer);
 
-        this.procedure.writeUnderline();
-        this.remarks.writeUnderline();
-        renderer.println();
-    }
-
-    public void collectStatistics() {
-        try {
-            ClientResponse cr = this.client.callProcedure("@SystemCatalog",
-                    "procedures");
-            if (cr.getStatus() == ClientResponse.SUCCESS) {
-                VoltTable[] tables = cr.getResults();
-                if (tables != null && tables.length > 0) {
-                    while (tables[0].advanceRow()) {
-                        String procedure = tables[0].getString("PROCEDURE_NAME");
-                        String remarks = tables[0].getString("REMARKS");
-
-                        SystemCatalogProcedureStatistics procStats = new SystemCatalogProcedureStatistics();
-                        procStats.setProcedure(procedure);
-                        procStats.setRemarks(remarks);
-                        
-                        this.set.add(procStats);
-                    }
-                }
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        this.setColumns(new Column[] { this.procedure, this.remarks });
     }
 
     public void printStatistics() {
@@ -70,5 +33,17 @@ public class SystemCatalogProcedureStatsTable extends Table {
             this.remarks.writeColumn(stats.getRemarks());
             this.renderer.println();
         }
+    }
+
+    @Override
+    protected void convertRows(VoltTable[] tables) {
+        String procedure = tables[0].getString(this.procedure.getDataMapping());
+        String remarks = tables[0].getString(this.remarks.getDataMapping());
+
+        SystemCatalogProcedureStatistics procStats = new SystemCatalogProcedureStatistics();
+        procStats.setProcedure(procedure);
+        procStats.setRemarks(remarks);
+
+        this.set.add(procStats);
     }
 }

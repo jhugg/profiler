@@ -45,10 +45,6 @@ import com.voltdb.profiler.configuration.SampleConfiguration;
  */
 public abstract class BaseVoltApp {
 
-    public final static String HORIZONTAL_RULE = "----------" + "----------"
-            + "----------" + "----------" + "----------" + "----------"
-            + "----------" + "----------" + "\n";
-
     protected Client client;
 
     protected final SampleConfiguration config;

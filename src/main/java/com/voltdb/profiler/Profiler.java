@@ -45,27 +45,23 @@ public class Profiler extends BaseVoltApp {
         ProcedureStatsTable procStatsTable = new ProcedureStatsTable(
                 this.client, renderer);
         procStatsTable.show();
-        renderer.println();
     }
-    
+
     protected void showSystemInformationDeployment(Renderer renderer) {
         SystemInformationDeploymentTable deploymentTable = new SystemInformationDeploymentTable(
                 this.client, renderer);
         deploymentTable.show();
-        renderer.println();
     }
-    
+
     protected void showSystemInformationOverview(Renderer renderer) {
         SystemInformationOverviewTable deploymentTable = new SystemInformationOverviewTable(
                 this.client, renderer);
         deploymentTable.show();
-        renderer.println();
     }
-    
+
     protected void showSystemCatalogProcedure(Renderer renderer) {
         SystemCatalogProcedureStatsTable procStatsTable = new SystemCatalogProcedureStatsTable(
                 this.client, renderer);
         procStatsTable.show();
-        renderer.println();
     }
 }
