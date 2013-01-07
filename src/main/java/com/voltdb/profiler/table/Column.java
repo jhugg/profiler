@@ -13,20 +13,22 @@ public class Column {
     private String formatString;
     private Renderer renderer;
     private boolean truncate = false;
-    
+
     private final static String TRUNCATE_PREFIX = "...";
 
     public Column(int width, String label, String dataMapping, Renderer renderer) {
-        this(width, label, dataMapping,renderer, false);
+        this(width, label, dataMapping, renderer, false);
     }
-    
-    public Column(int width, String label, String dataMapping, Renderer renderer, boolean truncate) {
+
+    public Column(int width, String label, String dataMapping,
+            Renderer renderer, boolean truncate) {
         this.width = width;
         this.label = label;
         this.setDataMapping(dataMapping);
-        this.formatString = "%" + width + "s";
+        this.formatString = "%" + (renderer.ignoreTruncation() ? "" : width)
+                + "s";
         this.renderer = renderer;
-        this.truncate = true;
+        this.truncate = truncate && !renderer.ignoreTruncation();
     }
 
     public String getDataMapping() {
@@ -65,23 +67,27 @@ public class Column {
     }
 
     public void writeUnderline() {
-        char[] tmp = new char[width];
-        Arrays.fill(tmp, '=');
-        renderer.print(new String(tmp));
+        renderer.printUnderline(this.width);
     }
 
     public void writeColumn(String value) {
-        String tmpValue = new String(value);
-        if ( value.length() > this.width && this.truncate == true) {
-            tmpValue = TRUNCATE_PREFIX + value.substring((value.length() + TRUNCATE_PREFIX.length())-this.width, value.length());
+        if (value != null) {
+            String tmpValue = new String(value);
+            if (value.length() > this.width && this.truncate == true) {
+                tmpValue = TRUNCATE_PREFIX
+                        + value.substring(
+                                (value.length() + TRUNCATE_PREFIX.length())
+                                        - this.width, value.length());
+            }
+            renderer.printf(this.formatString, tmpValue);
         }
-        renderer.printf(this.formatString, tmpValue);
     }
 
     public void writeColumnPercent(float percentTotalExecutionTime,
             int precision) {
         String tmpFormatString = "%." + precision + "f";
-        renderer.printf(this.formatString, String.format(tmpFormatString, percentTotalExecutionTime));
+        renderer.printf(this.formatString,
+                String.format(tmpFormatString, percentTotalExecutionTime));
 
     }
 

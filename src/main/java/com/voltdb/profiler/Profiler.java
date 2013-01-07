@@ -20,6 +20,7 @@ public class Profiler extends BaseVoltApp {
     public static void main(String[] args) {
         SampleConfiguration config = SampleConfigurationFactory
                 .getConfiguration(args);
+        System.out.println(config.c);
         Profiler profiler = new Profiler(config);
         try {
             profiler.start();
@@ -34,11 +35,19 @@ public class Profiler extends BaseVoltApp {
 
     @Override
     protected void execute() throws Exception {
-        Renderer renderer = RendererFactory.get(RendererFactory.RendererType.SYSTEM);
-        showSystemInformationOverview(renderer);
-        showSystemInformationDeployment(renderer);
-        showProcedureStatistics(renderer);
-        showSystemCatalogProcedure(renderer);
+        RendererFactory.RendererType rendererType = (this.config.c ? RendererFactory.RendererType.CSV
+                : RendererFactory.RendererType.SYSTEM);
+        Renderer renderer = RendererFactory.get(rendererType);
+
+        if (this.config.verbose || this.config.i) {
+            showSystemInformationOverview(renderer);
+            showSystemInformationDeployment(renderer);
+        }
+
+        if (this.config.verbose || this.config.p) {
+            showProcedureStatistics(renderer);
+            showSystemCatalogProcedure(renderer);
+        }
     }
 
     protected void showProcedureStatistics(Renderer renderer) {

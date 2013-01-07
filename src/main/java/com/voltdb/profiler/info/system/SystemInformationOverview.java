@@ -3,9 +3,25 @@ package com.voltdb.profiler.info.system;
 
 public class SystemInformationOverview  implements Comparable<SystemInformationOverview>{
 
+    
+    String address;
     String hostID;
     String property;
     String value;
+    
+    /**
+     * @return the hostName
+     */
+    public String getAddress() {
+        return address;
+    }
+    /**
+     * @param hostName the hostName to set
+     */
+    public void setAddress(String address) {
+        this.address = address;
+    }
+    
     /**
      * @return the hostID
      */

@@ -24,11 +24,12 @@
 package com.voltdb.profiler.configuration;
 
 import org.voltdb.CLIConfig;
+
 /**
- * Command line parser
- * This sample only needs the server.
+ * Command line parser This sample only needs the server.
+ * 
  * @author awilson
- *
+ * 
  */
 public class SampleConfiguration extends CLIConfig {
 
@@ -46,6 +47,18 @@ public class SampleConfiguration extends CLIConfig {
 
     @Option(desc = "Runtime in seconds.")
     public int runtime = 120;
+
+    @Option(desc = "CSV output", shortOpt = "c", hasArg = false)
+    public boolean c = false;
+
+    @Option(desc = "verbose", shortOpt = "v", hasArg = false)
+    public boolean verbose = false;
+
+    @Option(desc = "Cluster Information", shortOpt = "i", hasArg = false)
+    public boolean i = false;
+
+    @Option(desc = "Procedure Statistics", shortOpt = "p", hasArg = false)
+    public boolean p = false;
 
     public SampleConfiguration() {
     }

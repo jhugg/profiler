@@ -35,7 +35,8 @@ public abstract class Table {
     }
     
     protected void drawHeader() {
-        renderer.printf("%s%n", this.tableName);
+        renderer.printf("%s", this.tableName);
+        renderer.println();
         
         for ( Column col: this.columns ) {
             col.writeHeader();
