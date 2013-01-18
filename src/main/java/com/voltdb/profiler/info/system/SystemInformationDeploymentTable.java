@@ -19,8 +19,8 @@ public class SystemInformationDeploymentTable extends Table {
     public SystemInformationDeploymentTable(Client client, Renderer renderer) {
         super(client, renderer, "System Information Deployment Configuration", "@SystemInformation", "deployment");
         
-        this.property = new Column(25, "Property", "PROPERTY", this.renderer, true);
-        this.value = new Column(95, "Value", "VALUE", this.renderer, true);
+        this.property = new Column(45, "Property", "PROPERTY", this.renderer, true);
+        this.value = new Column(65, "Value", "VALUE", this.renderer, true);
         
         this.setColumns(new Column[] { this.property, this.value});
     }

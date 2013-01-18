@@ -2,8 +2,10 @@ package com.voltdb.profiler;
 
 import com.voltdb.profiler.configuration.SampleConfiguration;
 import com.voltdb.profiler.configuration.SampleConfigurationFactory;
+import com.voltdb.profiler.info.catalog.SystemCatalogColumnsTable;
 import com.voltdb.profiler.info.catalog.SystemCatalogProcedureStatsTable;
 import com.voltdb.profiler.info.procedure.ProcedureStatsTable;
+import com.voltdb.profiler.info.procedure.TableStatsTable;
 import com.voltdb.profiler.info.system.SystemInformationDeploymentTable;
 import com.voltdb.profiler.info.system.SystemInformationOverviewTable;
 import com.voltdb.profiler.renderer.Renderer;
@@ -46,7 +48,18 @@ public class Profiler extends BaseVoltApp {
 
         if (this.config.verbose || this.config.p) {
             showProcedureStatistics(renderer);
+        }
+
+        if (this.config.verbose || this.config.o) {
             showSystemCatalogProcedure(renderer);
+        }
+
+        if (this.config.verbose || this.config.t) {
+            showSystemCatalogProcedureColumns(renderer);
+        }
+
+        if (this.config.verbose || this.config.s) {
+            showTableStatistics(renderer);
         }
     }
 
@@ -72,5 +85,17 @@ public class Profiler extends BaseVoltApp {
         SystemCatalogProcedureStatsTable procStatsTable = new SystemCatalogProcedureStatsTable(
                 this.client, renderer);
         procStatsTable.show();
+    }
+
+    protected void showSystemCatalogProcedureColumns(Renderer renderer) {
+        SystemCatalogColumnsTable columnStatsTable = new SystemCatalogColumnsTable(
+                this.client, renderer);
+        columnStatsTable.show();
+    }
+
+    protected void showTableStatistics(Renderer renderer) {
+        TableStatsTable tableStats = new TableStatsTable(this.client,
+                renderer);
+        tableStats.show();
     }
 }

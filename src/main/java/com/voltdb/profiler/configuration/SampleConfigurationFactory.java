@@ -34,7 +34,7 @@ public class SampleConfigurationFactory {
     final static SampleConfiguration appConfig = new SampleConfiguration();
 
     public static SampleConfiguration getConfiguration(String[] args) {
-        appConfig.parse("ApacheLogSimulator", args);
+        appConfig.parse("com.voltdb.profile.Profile", args);
         return appConfig;
     }
 

@@ -52,13 +52,22 @@ public class SampleConfiguration extends CLIConfig {
     public boolean c = false;
 
     @Option(desc = "verbose", shortOpt = "v", hasArg = false)
-    public boolean verbose = false;
+    public boolean verbose;
 
     @Option(desc = "Cluster Information", shortOpt = "i", hasArg = false)
-    public boolean i = false;
+    public boolean i;
 
-    @Option(desc = "Procedure Statistics", shortOpt = "p", hasArg = false)
-    public boolean p = false;
+    @Option(desc = "Procedure Performance Statistics", shortOpt = "p", hasArg = false)
+    public boolean p;
+    
+    @Option(desc = "Procedure Overview", shortOpt = "o", hasArg = false)
+    public boolean o;
+    
+    @Option(desc = "Table Definitions", shortOpt = "t", hasArg = false)
+    public boolean t;
+    
+    @Option(desc = "Table Statistics", shortOpt = "s", hasArg = false)
+    public boolean s;
 
     public SampleConfiguration() {
     }

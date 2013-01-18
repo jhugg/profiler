@@ -54,14 +54,18 @@ public abstract class Table {
             ClientResponse cr = this.client.callProcedure(name,parameters);
             if (cr.getStatus() == ClientResponse.SUCCESS) {
                 VoltTable[] tables = cr.getResults();
-                if (tables != null && tables.length > 0) {
-                    while (tables[0].advanceRow()) {
-                        convertRows(tables);
-                    }
-                }
+                extractTables(tables);
             }
         } catch (Exception e) {
             e.printStackTrace();
+        }
+    }
+
+    protected void extractTables(VoltTable[] tables) {
+        if (tables != null && tables.length > 0) {
+            while (tables[0].advanceRow()) {
+                convertRows(tables);
+            }
         }
     }
     

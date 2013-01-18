@@ -26,7 +26,7 @@ public class SystemInformationOverviewTable extends Table {
         this.addressColumn = new Column(15, "Host IP", null, this.renderer);
         this.hostIDColumn = new Column(10, "Host ID", "HOST_ID", this.renderer);
         this.propertyColumn = new Column(35, "Property", "KEY", this.renderer);
-        this.valueColumn = new Column(75, "Value", "VALUE", this.renderer, true);
+        this.valueColumn = new Column(80, "Value", "VALUE", this.renderer, true);
 
         this.setColumns(new Column[] { this.addressColumn, this.hostIDColumn,
                 this.propertyColumn, this.valueColumn });
